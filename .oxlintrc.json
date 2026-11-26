@@ -1,0 +1,36 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "oxc",
+    "typescript",
+    "unicorn",
+    "react"
+  ],
+  "categories": {
+    "correctness": "error"
+  },
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn"
+  },
+  "overrides": [
+    {
+      "files": [
+        "apps/*/src/**",
+        "packages/ui/src/**"
+      ],
+      "env": {
+        "browser": true
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "vendor/**",
+    "**/dist/**",
+    "packages/api-client/src/collab/**",
+    "packages/api-client/src/kb/**"
+  ]
+}

@@ -3,3 +3,5 @@ packages:
   - packages/*
   - services/docx-sidecar
   - vendor/docx-editor/packages/*
+allowBuilds:
+  esbuild: true

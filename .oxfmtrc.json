@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": false,
+  "ignorePatterns": [
+    "vendor/**",
+    "**/dist/**",
+    "packages/api-client/src/collab/**",
+    "packages/api-client/src/kb/**"
+  ]
+}

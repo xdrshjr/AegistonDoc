@@ -4,8 +4,15 @@
     // which reaches core's ES2022 sources. Same floor as the packages themselves.
     "target": "ES2022",
     "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["bun", "vite/client"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "bun",
+      "vite/client"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
@@ -26,16 +33,36 @@
     // different types, so the store's private field made every call across the seam an error —
     // 7 of them in `binding/tree-session.ts` alone, blamed on a file that is correct.
     "paths": {
-      "@/*": ["./packages/react/src/*"],
-      "@docx-editor.dev/react": ["./packages/react/src/index.ts"],
-      "@docx-editor.dev/core": ["./packages/core/src/index.ts"],
-      "@docx-editor.dev/core/*": ["./packages/core/src/*"],
-      "@docx-editor.dev/pro": ["./packages/pro/src/index.ts"],
-      "@docx-editor.dev/pro/*": ["./packages/pro/src/*"],
-      "@docx-editor.dev/i18n": ["./packages/i18n/src/index.ts"],
-      "@docx-editor.dev/docx-to-markdown": ["./packages/docx-to-markdown/src/index.ts"],
-      "@docx-editor.dev/editor-api": ["./packages/editor-api/src/index.ts"],
-      "@docx-editor.dev/editor-api/*": ["./packages/editor-api/src/*"]
+      "@/*": [
+        "./packages/react/src/*"
+      ],
+      "@docx-editor.dev/react": [
+        "./packages/react/src/index.ts"
+      ],
+      "@docx-editor.dev/core": [
+        "./packages/core/src/index.ts"
+      ],
+      "@docx-editor.dev/core/*": [
+        "./packages/core/src/*"
+      ],
+      "@docx-editor.dev/pro": [
+        "./packages/pro/src/index.ts"
+      ],
+      "@docx-editor.dev/pro/*": [
+        "./packages/pro/src/*"
+      ],
+      "@docx-editor.dev/i18n": [
+        "./packages/i18n/src/index.ts"
+      ],
+      "@docx-editor.dev/docx-to-markdown": [
+        "./packages/docx-to-markdown/src/index.ts"
+      ],
+      "@docx-editor.dev/editor-api": [
+        "./packages/editor-api/src/index.ts"
+      ],
+      "@docx-editor.dev/editor-api/*": [
+        "./packages/editor-api/src/*"
+      ]
     }
   },
   // `docs/site/data` holds the typed feature matrix that AGENTS.md makes the single source of
@@ -50,5 +77,11 @@
     "examples/plugins",
     "docs/site/data"
   ],
-  "exclude": ["node_modules", "dist", "examples/nextjs", "examples/remix", "examples/astro"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "examples/nextjs",
+    "examples/remix",
+    "examples/astro"
+  ]
 }
