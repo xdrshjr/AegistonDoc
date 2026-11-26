@@ -1,0 +1,13 @@
+[project]
+name = "aegistondoc"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.uv.workspace]
+members = [
+    "services/shared-py",
+    "services/collab-server",
+    "services/kb-server",
+    "services/kb-workers",
+]

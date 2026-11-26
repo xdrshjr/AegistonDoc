@@ -1,0 +1,11 @@
+[project]
+name = "kb-workers"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "celery[redis]>=5.7.0",
+    "shared-py",
+]
+
+[tool.uv.sources]
+shared-py = { workspace = true }
