@@ -9,3 +9,5 @@ __pycache__/
 !.env.example
 celerybeat-schedule*
 openapi-ts-error-*.log
+
+.vscode/

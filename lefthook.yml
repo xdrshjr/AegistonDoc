@@ -1,0 +1,28 @@
+glob_matcher: doublestar
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: js-ts
+      group:
+        jobs:
+          - name: oxlint
+            glob: "**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"
+            run: pnpm exec oxlint --fix --no-error-on-unmatched-pattern -- "{staged_files}"
+            stage_fixed: true
+          - name: oxfmt
+            glob: "**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,json,jsonc,css}"
+            run: pnpm exec oxfmt --no-error-on-unmatched-pattern -- "{staged_files}"
+            stage_fixed: true
+
+    - name: python
+      group:
+        jobs:
+          - name: ruff-check
+            glob: "**/*.{py,pyi}"
+            run: uv run ruff check --fix -- "{staged_files}"
+            stage_fixed: true
+          - name: ruff-format
+            glob: "**/*.{py,pyi}"
+            run: uv run ruff format -- "{staged_files}"
+            stage_fixed: true

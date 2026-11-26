@@ -5,3 +5,4 @@ packages:
   - vendor/docx-editor/packages/*
 allowBuilds:
   esbuild: true
+  lefthook: true
