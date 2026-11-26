@@ -1,11 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "oxc",
-    "typescript",
-    "unicorn",
-    "react"
-  ],
+  "plugins": ["oxc", "typescript", "unicorn", "react"],
   "categories": {
     "correctness": "error"
   },
@@ -18,10 +13,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "apps/*/src/**",
-        "packages/ui/src/**"
-      ],
+      "files": ["apps/*/src/**", "packages/ui/src/**"],
       "env": {
         "browser": true
       }
