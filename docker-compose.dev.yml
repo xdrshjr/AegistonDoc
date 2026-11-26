@@ -1,0 +1,36 @@
+services:
+  postgres:
+    build:
+      context: ./deploy/dev
+      dockerfile: Dockerfile.postgres
+    environment:
+      POSTGRES_PASSWORD: "${DEV_POSTGRES_PASSWORD:-postgres}"
+    ports:
+      - "127.0.0.1:${DEV_POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./deploy/dev/init-postgres.sql:/docker-entrypoint-initdb.d/01-databases.sql:ro
+    healthcheck:
+      # The initialization server only listens on a Unix socket.
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "postgres", "-d", "kb_dev"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "127.0.0.1:${DEV_REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres_data:
+  redis_data:

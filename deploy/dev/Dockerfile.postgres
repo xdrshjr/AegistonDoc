@@ -1,0 +1,30 @@
+FROM postgres:16-bookworm AS age-build
+
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+      bison build-essential ca-certificates curl flex postgresql-server-dev-16; \
+    curl -fsSL --retry 3 -o /tmp/age.tar.gz \
+      https://archive.apache.org/dist/age/PG16/1.6.0/apache-age-1.6.0-src.tar.gz; \
+    echo '1e0a434d53d669e5d067721e1eba8c3c3c2ae072709d5f90783beeba6f5e88f592fa5d8808d621b720c22edfe8c698baa9b0adb9c7b4e3e2a83e7a753bd795c8  /tmp/age.tar.gz' | sha512sum -c -; \
+    mkdir /tmp/age; \
+    tar -xzf /tmp/age.tar.gz -C /tmp/age --strip-components=1; \
+    cd /tmp/age; \
+    make PG_CONFIG=/usr/lib/postgresql/16/bin/pg_config; \
+    make PG_CONFIG=/usr/lib/postgresql/16/bin/pg_config DESTDIR=/age-install install
+
+FROM postgres:16-bookworm
+
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends ca-certificates wget; \
+    wget -O /tmp/groonga-apt-source.deb https://packages.groonga.org/debian/groonga-apt-source-latest-bookworm.deb; \
+    apt-get install -y --no-install-recommends /tmp/groonga-apt-source.deb; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends postgresql-16-pgvector postgresql-16-pgdg-pgroonga; \
+    apt-get purge -y --auto-remove wget; \
+    rm -rf /var/lib/apt/lists/* /tmp/groonga-apt-source.deb
+
+COPY --from=age-build /age-install/ /
+
+CMD ["postgres", "-c", "shared_preload_libraries=age"]
