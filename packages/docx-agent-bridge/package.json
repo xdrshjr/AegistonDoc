@@ -1,0 +1,9 @@
+{
+  "name": "@workspace/docx-agent-bridge",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@docx-editor.dev/core": "workspace:*",
+    "@workspace/api-client": "workspace:*"
+  }
+}
