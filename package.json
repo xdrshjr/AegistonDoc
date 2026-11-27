@@ -8,6 +8,7 @@
     "lint": "oxlint",
     "typecheck": "pnpm --filter \"./apps/*\" --filter \"./packages/*\" --filter docx-sidecar run --if-present typecheck && uv run pyright",
     "format": "oxfmt --write --no-error-on-unmatched-pattern \"**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,json,jsonc,css}\"",
+    "format:check": "oxfmt --check --no-error-on-unmatched-pattern \"**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,json,jsonc,css}\"",
     "test": "vitest run",
     "test:py": "uv run pytest",
     "prepare": "lefthook install",

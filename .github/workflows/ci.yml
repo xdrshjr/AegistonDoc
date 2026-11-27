@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "pnpm"
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          python-version: "3.12"
+
+      - run: pnpm install --frozen-lockfile
+      - run: uv sync --locked
+      # The workspace imports the editor's gitignored dist files.
+      - run: pnpm run build:docx-editor
+
+      - run: pnpm run format:check
+      - run: pnpm run lint
+      - run: uv run ruff format --check
+      - run: uv run ruff check
+      - name: Check generated API contracts for drift
+        run: uv run export-openapi && pnpm run codegen && git diff --exit-code
+      - run: pnpm run typecheck
+      - run: pnpm run test
+      - run: uv run pytest
+      - run: pnpm run build
