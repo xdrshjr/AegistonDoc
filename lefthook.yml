@@ -1,7 +1,6 @@
 glob_matcher: doublestar
 
 pre-commit:
-  parallel: true
   jobs:
     - name: js-ts
       group:
