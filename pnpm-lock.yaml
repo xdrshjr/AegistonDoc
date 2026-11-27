@@ -125,6 +125,10 @@ importers:
       '@workspace/api-client':
         specifier: workspace:*
         version: link:../api-client
+    devDependencies:
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
 
   packages/ui:
     dependencies:
