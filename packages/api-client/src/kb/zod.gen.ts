@@ -3,31 +3,15 @@
 import * as z from 'zod';
 
 /**
- * Item
+ * HealthResponse
  */
-export const zItem = z.object({
-    name: z.string(),
-    description: z.string().nullish(),
-    price: z.number(),
-    tax: z.number().nullish()
+export const zHealthResponse = z.object({
+    service: z.string(),
+    status: z.literal('ok').optional().default('ok'),
+    version: z.string()
 });
 
 /**
- * ValidationError
+ * Successful Response
  */
-export const zValidationError = z.object({
-    loc: z.array(z.union([z.string(), z.int()])),
-    msg: z.string(),
-    type: z.string(),
-    input: z.unknown().optional(),
-    ctx: z.record(z.string(), z.unknown()).optional()
-});
-
-/**
- * HTTPValidationError
- */
-export const zHttpValidationError = z.object({
-    detail: z.array(zValidationError).optional()
-});
-
-export const zCreateItemItemsPostBody = zItem;
+export const zGetHealthResponse = zHealthResponse;

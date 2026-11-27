@@ -2,8 +2,17 @@
   "name": "@workspace/docx-agent-bridge",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "@docx-editor.dev/core": "workspace:*",
     "@workspace/api-client": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3"
   }
 }

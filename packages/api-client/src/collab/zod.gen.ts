@@ -3,31 +3,157 @@
 import * as z from 'zod';
 
 /**
- * Item
+ * AddCommentOp
+ *
+ * Attach a comment to the paragraph identified by para_id.
  */
-export const zItem = z.object({
-    name: z.string(),
-    description: z.string().nullish(),
-    price: z.number(),
-    tax: z.number().nullish()
+export const zAddCommentOp = z.object({
+    op: z.literal('add_comment'),
+    op_id: z.string(),
+    para_id: z.string(),
+    text: z.string()
 });
 
 /**
- * ValidationError
+ * CanonicalParagraph
  */
-export const zValidationError = z.object({
-    loc: z.array(z.union([z.string(), z.int()])),
-    msg: z.string(),
-    type: z.string(),
-    input: z.unknown().optional(),
-    ctx: z.record(z.string(), z.unknown()).optional()
+export const zCanonicalParagraph = z.object({
+    para_id: z.string(),
+    style_id: z.string().nullish().default(null),
+    text: z.string()
 });
 
 /**
- * HTTPValidationError
+ * DeleteParagraphOp
  */
-export const zHttpValidationError = z.object({
-    detail: z.array(zValidationError).optional()
+export const zDeleteParagraphOp = z.object({
+    op: z.literal('delete_paragraph'),
+    op_id: z.string(),
+    para_id: z.string()
 });
 
-export const zCreateItemItemsPostBody = zItem;
+/**
+ * DocxApplyOpsResponse
+ */
+export const zDocxApplyOpsResponse = z.object({
+    applied_op_ids: z.array(z.string()),
+    docx_base64: z.string()
+});
+
+/**
+ * DocxExportRequest
+ */
+export const zDocxExportRequest = z.object({
+    docx_base64: z.string()
+});
+
+/**
+ * DocxExportResponse
+ */
+export const zDocxExportResponse = z.object({
+    docx_base64: z.string()
+});
+
+/**
+ * DocxInspectRequest
+ */
+export const zDocxInspectRequest = z.object({
+    docx_base64: z.string()
+});
+
+/**
+ * DocxInspectResponse
+ */
+export const zDocxInspectResponse = z.object({
+    paragraphs: z.array(zCanonicalParagraph)
+});
+
+/**
+ * HealthResponse
+ */
+export const zHealthResponse = z.object({
+    service: z.string(),
+    status: z.literal('ok').optional().default('ok'),
+    version: z.string()
+});
+
+/**
+ * InsertParagraphOp
+ *
+ * Insert a paragraph before or after the anchor identified by para_id.
+ */
+export const zInsertParagraphOp = z.object({
+    op: z.literal('insert_paragraph'),
+    op_id: z.string(),
+    para_id: z.string(),
+    position: z.enum(['before', 'after']),
+    text: z.string()
+});
+
+/**
+ * InterruptPayload
+ */
+export const zInterruptPayload = z.object({
+    kind: z.enum([
+        'outline_confirm',
+        'section_review',
+        'tool_approval'
+    ]),
+    options: z.array(z.string()).optional(),
+    outline_markdown: z.string().nullish().default(null),
+    summary: z.string(),
+    title: z.string()
+});
+
+/**
+ * ReplaceParagraphOp
+ */
+export const zReplaceParagraphOp = z.object({
+    op: z.literal('replace_paragraph'),
+    op_id: z.string(),
+    para_id: z.string(),
+    text: z.string()
+});
+
+export const zDocOp = z.discriminatedUnion('op', [
+    zReplaceParagraphOp,
+    zInsertParagraphOp,
+    zDeleteParagraphOp,
+    zAddCommentOp
+]);
+
+/**
+ * DocxApplyOpsRequest
+ */
+export const zDocxApplyOpsRequest = z.object({
+    docx_base64: z.string(),
+    ops: z.array(zDocOp)
+});
+
+/**
+ * TodoItem
+ */
+export const zTodoItem = z.object({
+    id: z.string(),
+    status: z.enum([
+        'pending',
+        'in_progress',
+        'completed',
+        'cancelled'
+    ]),
+    title: z.string()
+});
+
+/**
+ * CollabAgentState
+ */
+export const zCollabAgentState = z.object({
+    active_doc_id: z.string().nullish().default(null),
+    outline_confirmed: z.boolean().optional().default(false),
+    todos: z.array(zTodoItem).optional()
+});
+
+/**
+ * Successful Response
+ */
+export const zGetHealthResponse = zHealthResponse;

@@ -18,7 +18,10 @@ source = { virtual = "." }
 
 [package.dev-dependencies]
 dev = [
+    { name = "collab-server" },
     { name = "httpx" },
+    { name = "kb-server" },
+    { name = "kb-workers" },
     { name = "pyright" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
@@ -30,7 +33,10 @@ dev = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "collab-server", editable = "services/collab-server" },
     { name = "httpx" },
+    { name = "kb-server", editable = "services/kb-server" },
+    { name = "kb-workers", editable = "services/kb-workers" },
     { name = "pyright", specifier = ">=1.1.414" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
@@ -174,7 +180,7 @@ wheels = [
 [[package]]
 name = "collab-server"
 version = "0.1.0"
-source = { virtual = "services/collab-server" }
+source = { editable = "services/collab-server" }
 dependencies = [
     { name = "fastapi" },
     { name = "shared-py" },
@@ -273,7 +279,7 @@ wheels = [
 [[package]]
 name = "kb-server"
 version = "0.1.0"
-source = { virtual = "services/kb-server" }
+source = { editable = "services/kb-server" }
 dependencies = [
     { name = "fastapi" },
     { name = "shared-py" },
@@ -290,7 +296,7 @@ requires-dist = [
 [[package]]
 name = "kb-workers"
 version = "0.1.0"
-source = { virtual = "services/kb-workers" }
+source = { editable = "services/kb-workers" }
 dependencies = [
     { name = "celery", extra = ["redis"] },
     { name = "shared-py" },

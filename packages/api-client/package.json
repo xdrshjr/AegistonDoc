@@ -12,8 +12,9 @@
   },
   "scripts": {
     "codegen": "pnpm run codegen:collab && pnpm run codegen:kb",
-    "codegen:collab": "openapi-ts -i http://127.0.0.1:8000/openapi.json -o src/collab -p @hey-api/typescript @hey-api/sdk @hey-api/client-axios @tanstack/react-query zod",
-    "codegen:kb": "openapi-ts -i http://127.0.0.1:8001/openapi.json -o src/kb -p @hey-api/typescript @hey-api/sdk @hey-api/client-axios @tanstack/react-query zod"
+    "codegen:collab": "openapi-ts -i ./openapi/collab.json -o src/collab -p @hey-api/typescript @hey-api/sdk @hey-api/client-axios @tanstack/react-query zod",
+    "codegen:kb": "openapi-ts -i ./openapi/kb.json -o src/kb -p @hey-api/typescript @hey-api/sdk @hey-api/client-axios @tanstack/react-query zod",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@tanstack/react-query": "^5",

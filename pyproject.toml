@@ -13,6 +13,9 @@ members = [
 ]
 
 [tool.uv.sources]
+collab-server = { workspace = true }
+kb-server = { workspace = true }
+kb-workers = { workspace = true }
 shared-py = { workspace = true }
 
 [tool.ruff]
@@ -33,7 +36,10 @@ testpaths = ["services"]
 
 [dependency-groups]
 dev = [
+    "collab-server",
     "httpx",
+    "kb-server",
+    "kb-workers",
     "pyright>=1.1.414",
     "pytest",
     "pytest-asyncio",

@@ -1,0 +1,435 @@
+{
+  "components": {
+    "schemas": {
+      "AddCommentOp": {
+        "description": "Attach a comment to the paragraph identified by para_id.",
+        "properties": {
+          "op": {
+            "const": "add_comment",
+            "title": "Op",
+            "type": "string"
+          },
+          "op_id": {
+            "title": "Op Id",
+            "type": "string"
+          },
+          "para_id": {
+            "title": "Para Id",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "op",
+          "op_id",
+          "para_id",
+          "text"
+        ],
+        "title": "AddCommentOp",
+        "type": "object"
+      },
+      "CanonicalParagraph": {
+        "properties": {
+          "para_id": {
+            "title": "Para Id",
+            "type": "string"
+          },
+          "style_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Style Id"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "para_id",
+          "text"
+        ],
+        "title": "CanonicalParagraph",
+        "type": "object"
+      },
+      "CollabAgentState": {
+        "properties": {
+          "active_doc_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Active Doc Id"
+          },
+          "outline_confirmed": {
+            "default": false,
+            "title": "Outline Confirmed",
+            "type": "boolean"
+          },
+          "todos": {
+            "items": {
+              "$ref": "#/components/schemas/TodoItem"
+            },
+            "title": "Todos",
+            "type": "array"
+          }
+        },
+        "title": "CollabAgentState",
+        "type": "object"
+      },
+      "DeleteParagraphOp": {
+        "properties": {
+          "op": {
+            "const": "delete_paragraph",
+            "title": "Op",
+            "type": "string"
+          },
+          "op_id": {
+            "title": "Op Id",
+            "type": "string"
+          },
+          "para_id": {
+            "title": "Para Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "op",
+          "op_id",
+          "para_id"
+        ],
+        "title": "DeleteParagraphOp",
+        "type": "object"
+      },
+      "DocOp": {
+        "discriminator": {
+          "mapping": {
+            "add_comment": "#/components/schemas/AddCommentOp",
+            "delete_paragraph": "#/components/schemas/DeleteParagraphOp",
+            "insert_paragraph": "#/components/schemas/InsertParagraphOp",
+            "replace_paragraph": "#/components/schemas/ReplaceParagraphOp"
+          },
+          "propertyName": "op"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/ReplaceParagraphOp"
+          },
+          {
+            "$ref": "#/components/schemas/InsertParagraphOp"
+          },
+          {
+            "$ref": "#/components/schemas/DeleteParagraphOp"
+          },
+          {
+            "$ref": "#/components/schemas/AddCommentOp"
+          }
+        ]
+      },
+      "DocxApplyOpsRequest": {
+        "properties": {
+          "docx_base64": {
+            "title": "Docx Base64",
+            "type": "string"
+          },
+          "ops": {
+            "items": {
+              "$ref": "#/components/schemas/DocOp"
+            },
+            "title": "Ops",
+            "type": "array"
+          }
+        },
+        "required": [
+          "docx_base64",
+          "ops"
+        ],
+        "title": "DocxApplyOpsRequest",
+        "type": "object"
+      },
+      "DocxApplyOpsResponse": {
+        "properties": {
+          "applied_op_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Applied Op Ids",
+            "type": "array"
+          },
+          "docx_base64": {
+            "title": "Docx Base64",
+            "type": "string"
+          }
+        },
+        "required": [
+          "docx_base64",
+          "applied_op_ids"
+        ],
+        "title": "DocxApplyOpsResponse",
+        "type": "object"
+      },
+      "DocxExportRequest": {
+        "properties": {
+          "docx_base64": {
+            "title": "Docx Base64",
+            "type": "string"
+          }
+        },
+        "required": [
+          "docx_base64"
+        ],
+        "title": "DocxExportRequest",
+        "type": "object"
+      },
+      "DocxExportResponse": {
+        "properties": {
+          "docx_base64": {
+            "title": "Docx Base64",
+            "type": "string"
+          }
+        },
+        "required": [
+          "docx_base64"
+        ],
+        "title": "DocxExportResponse",
+        "type": "object"
+      },
+      "DocxInspectRequest": {
+        "properties": {
+          "docx_base64": {
+            "title": "Docx Base64",
+            "type": "string"
+          }
+        },
+        "required": [
+          "docx_base64"
+        ],
+        "title": "DocxInspectRequest",
+        "type": "object"
+      },
+      "DocxInspectResponse": {
+        "properties": {
+          "paragraphs": {
+            "items": {
+              "$ref": "#/components/schemas/CanonicalParagraph"
+            },
+            "title": "Paragraphs",
+            "type": "array"
+          }
+        },
+        "required": [
+          "paragraphs"
+        ],
+        "title": "DocxInspectResponse",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "properties": {
+          "service": {
+            "title": "Service",
+            "type": "string"
+          },
+          "status": {
+            "const": "ok",
+            "default": "ok",
+            "title": "Status",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "service",
+          "version"
+        ],
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "InsertParagraphOp": {
+        "description": "Insert a paragraph before or after the anchor identified by para_id.",
+        "properties": {
+          "op": {
+            "const": "insert_paragraph",
+            "title": "Op",
+            "type": "string"
+          },
+          "op_id": {
+            "title": "Op Id",
+            "type": "string"
+          },
+          "para_id": {
+            "title": "Para Id",
+            "type": "string"
+          },
+          "position": {
+            "enum": [
+              "before",
+              "after"
+            ],
+            "title": "Position",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "op",
+          "op_id",
+          "para_id",
+          "position",
+          "text"
+        ],
+        "title": "InsertParagraphOp",
+        "type": "object"
+      },
+      "InterruptPayload": {
+        "properties": {
+          "kind": {
+            "enum": [
+              "outline_confirm",
+              "section_review",
+              "tool_approval"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "options": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Options",
+            "type": "array"
+          },
+          "outline_markdown": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Outline Markdown"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "title",
+          "summary"
+        ],
+        "title": "InterruptPayload",
+        "type": "object"
+      },
+      "ReplaceParagraphOp": {
+        "properties": {
+          "op": {
+            "const": "replace_paragraph",
+            "title": "Op",
+            "type": "string"
+          },
+          "op_id": {
+            "title": "Op Id",
+            "type": "string"
+          },
+          "para_id": {
+            "title": "Para Id",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "op",
+          "op_id",
+          "para_id",
+          "text"
+        ],
+        "title": "ReplaceParagraphOp",
+        "type": "object"
+      },
+      "TodoItem": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "in_progress",
+              "completed",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status"
+        ],
+        "title": "TodoItem",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "collab-server",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/healthz": {
+      "get": {
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Check service health"
+      }
+    }
+  }
+}

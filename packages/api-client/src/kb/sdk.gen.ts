@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateItemItemsPostData, CreateItemItemsPostErrors, CreateItemItemsPostResponses } from './types.gen';
+import type { GetHealthData, GetHealthResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -19,14 +19,10 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
- * Create Item
+ * Check service health
  */
-export const createItemItemsPost = <ThrowOnError extends boolean = false>(options: Options<CreateItemItemsPostData, ThrowOnError>): RequestResult<CreateItemItemsPostResponses, CreateItemItemsPostErrors, ThrowOnError> => (options.client ?? client).post<CreateItemItemsPostResponses, CreateItemItemsPostErrors, ThrowOnError>({
+export const getHealth = <ThrowOnError extends boolean = false>(options?: Options<GetHealthData, ThrowOnError>): RequestResult<GetHealthResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetHealthResponses, unknown, ThrowOnError>({
     responseType: 'json',
-    url: '/items/',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
+    url: '/api/v1/healthz',
+    ...options
 });

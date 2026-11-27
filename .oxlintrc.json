@@ -22,6 +22,7 @@
   "ignorePatterns": [
     "vendor/**",
     "**/dist/**",
+    "packages/api-client/openapi/**",
     "packages/api-client/src/collab/**",
     "packages/api-client/src/kb/**"
   ]
