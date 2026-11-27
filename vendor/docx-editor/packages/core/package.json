@@ -99,6 +99,7 @@
     "postcss": "^8.5.33",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
+    "tsup": "^9.0.0",
     "typescript7": "npm:typescript@^7.0.2"
   },
   "license": "Apache-2.0",
@@ -108,7 +109,7 @@
     "directory": "packages/core"
   },
   "dependencies": {
-    "@docx-editor.dev/i18n": "^2.40.0",
+    "@docx-editor.dev/i18n": "workspace:^",
     "bidi-js": "1.1.0",
     "emf-converter": "4.29.0",
     "fast-xml-parser": "^5.12.1",

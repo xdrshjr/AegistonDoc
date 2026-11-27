@@ -3,10 +3,13 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter \"./apps/*\" --filter docx-sidecar run --parallel dev",
-    "build": "pnpm --filter \"./apps/*\" --filter docx-sidecar run build",
+    "build": "pnpm run build:docx-editor && pnpm --filter \"./apps/*\" --filter docx-sidecar run build",
+    "build:docx-editor": "pnpm --filter @docx-editor.dev/i18n run build && pnpm --filter @docx-editor.dev/core run build && pnpm --filter @docx-editor.dev/react run build",
     "lint": "oxlint",
-    "format": "oxfmt --write \"**/*.{ts,tsx,mts,json,jsonc}\"",
+    "typecheck": "pnpm --filter \"./apps/*\" --filter \"./packages/*\" --filter docx-sidecar run --if-present typecheck && uv run pyright",
+    "format": "oxfmt --write --no-error-on-unmatched-pattern \"**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,json,jsonc,css}\"",
     "test": "vitest run",
+    "prepare": "lefthook install",
     "codegen": "pnpm --filter \"@workspace/api-client\" run codegen"
   },
   "devDependencies": {

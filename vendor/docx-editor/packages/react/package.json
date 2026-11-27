@@ -46,6 +46,7 @@
   "devDependencies": {
     "@docx-editor.dev/core": "workspace:*",
     "fflate": "^0.8.2",
+    "tsup": "^9.0.0",
     "typescript7": "npm:typescript@^7.0.2"
   },
   "keywords": [
@@ -71,7 +72,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@docx-editor.dev/i18n": "^2.40.0",
+    "@docx-editor.dev/i18n": "workspace:^",
     "@radix-ui/react-select": "^2.3.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1"

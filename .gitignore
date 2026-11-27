@@ -4,6 +4,10 @@ dist/
 .venv/
 __pycache__/
 *.py[cod]
+logs/
+.pytest_cache/
+.ruff_cache/
+.coverage
 .env
 .env.*
 !.env.example
