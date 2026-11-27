@@ -15,3 +15,9 @@ celerybeat-schedule*
 openapi-ts-error-*.log
 
 .vscode/
+
+# Local object storage and Phoenix SQLite files
+.storage/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
